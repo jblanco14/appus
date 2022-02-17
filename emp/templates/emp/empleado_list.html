@@ -1,0 +1,105 @@
+{% extends  'base/base.html' %}
+
+{% block  page_content %}
+
+<!-- Dropdown Card Example -->
+<div class="card card-header-actions">
+    <div class="card-header">
+        Creación de Empleados
+        <div class="dropdown no-caret">
+            <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i data-feather="more-vertical"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right animated--fade-in-up" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'emp:empleado_new' %}"><i class="far fa-calendar-plus"></i>Nuevo</a>
+                <a class="dropdown-item" href="#!">Cancelar</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Card Body -->
+    <div class="card-body">
+      {% if not obj %}
+        <div class="alert alert-info">No existen empleados</div>    
+    
+      {% else %}
+        <table class="table table-sm table-bordered">
+            <thead>
+                <th>Num.Identificación</th> 
+                <th>Nombres</th>       
+                <th>Apellidos</th>
+                <th>Num.Telefonico</th>
+                <th>Cargo</th>
+                <th>Estado</th>
+                <th style="text-align: center" class="all">Acciones</th>
+            </thead>
+            <tbody>
+                {% for item in obj %}
+
+                <tr>
+                    <td>{{ item.numero_identificacion }}</td>
+                    <td>{{ item.nombres }}</td>
+                    <td>{{ item.apellidos }}</td>
+                    <td>{{ item.numero_telefonico }}</td>
+                    <td>{{ item.cargo }}</td>
+                    <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+                    <td style="text-align: center" >
+                         <a href="{% url 'emp:empleado_edit' item.id %}" class="btn btn-warning btn-circle" role="button"> <i class="far fa-edit"></i></a>
+                         <!-- <button type="button" class="btn btn-xm btn-danger" data-toggle="popover" title="Información importante!!" data-content="Tener cuidado al borrar registro, recuerde solo inactivar">Info</button> -->
+                         <a href="#" class="btn btn-success btn-circle" role="button"> <i class="far fa-eye"></i></a>  
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+        {% endif %}  
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js_page %}
+<script>
+    // Call the dataTables jQuery plugin
+  //   para realizar traduccion de labels
+ 
+    $(function () {
+
+        $("#id_ffecha_vigencia_licencia, #id_fecha_nacimiento").datetimepicker({
+            format: 'Y-m-d',
+            timepicker:false
+        });  
+  
+  $(document).ready(function() {
+      $('.table').DataTable({
+        "language": {
+          "sProcessing": "Procesando...",
+          "sLengthMenu": "Mostrar _MENU_ registros",
+          "sZeroRecords": "No se encontraron resultados",
+          "sEmptyTable": "Ningún dato disponible en esta tabla",
+          "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+          "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+          "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+          "sInfoPostFix": "",
+          "sSearch": "Buscar:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Cargando...",
+          "oPaginate": {
+              "sFirst": "<span class='fa fa-angle-double-left'></span>",
+              "sLast": "<span class='fa fa-angle-double-right'></span>",
+              "sNext": "<span class='fa fa-angle-right'></span>",
+              "sPrevious": "<span class='fa fa-angle-left'></span>"
+          },
+          "oAria": {
+              "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+          }
+        }
+      });
+    });
+    </script>
+  {% endblock %}

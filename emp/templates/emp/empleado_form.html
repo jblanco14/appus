@@ -1,0 +1,170 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModalLg">Realizar clic para gestionar</button>
+<div class="modal fade" id="exampleModalLg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h5 class="modal-title">Creación de Empleados</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                {% if obj %}
+                <form method="POST" role="form" class="form-inline" action="{% url 'emp:empleado_edit' obj.pk %}" >
+                {% else %}
+                <form method="POST" role="form" class="form-inline" action="{% url 'emp:empleado_new' %}" >
+                {% endif %}
+                    <div class="col-xl-12 col-md-12 mb-12">
+                        {% if obj %}
+                        <div class="card border-left-warning shadow h-120 py-2">
+                        {% else %}
+                        <div class="card border-left-success shadow h-120 py-2">
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                            <div class="col mr-3">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {% if obj %} Editar {% else %} Nuevo {% endif %} Empleado
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                {% csrf_token %}
+                                <div class="row">
+                                    {#{ form.as_p }#}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.tipo_documento.label}}</div>
+                                        <div class="col-md-6">{{form.tipo_documento}}</div>    
+                                    </div> 
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.numero_identificacion.label}}</div>
+                                        <div class="col-md-6">{{form.numero_identificacion}}</div>
+                                    </div>                           
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.nombres.label}}</div>
+                                        <div class="col-md-6">{{form.nombres}}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.apellidos.label}}</div>
+                                        <div class="col-md-6">{{form.apellidos}}</div>    
+                                    </div>                            
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.fecha_nacimiento.label}}</div>
+                                        <div class="col-md-6">{{form.fecha_nacimiento}}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.lugar_nacimiento.label}}</div>
+                                        <div class="col-md-6">{{form.lugar_nacimiento}}</div>    
+                                    </div>                            
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.sexo.label}}</div>
+                                        <div class="col-md-6">{{form.sexo}}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.estado_civil.label}}</div>
+                                        <div class="col-md-6">{{form.estado_civil}}</div>    
+                                    </div>                            
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.nacionalidad.label}}</div>
+                                        <div class="col-md-6">{{form.nacionalidad}}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.ciudad_resident.label}}</div>
+                                        <div class="col-md-6">{{form.ciudad_resident}}</div>    
+                                    </div>                            
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.cargo.label}}</div>
+                                        <div class="col-md-6">{{form.cargo}}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.social_security.label}}</div>
+                                        <div class="col-md-6">{{form.social_security}}</div>
+                                    </div>           
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.direccion_residencia.label}}</div>
+                                        <div class="col-md-6">{{form.direccion_residencia}}</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.barrio.label}}</div>
+                                        <div class="col-md-6">{{form.barrio}}</div>    
+                                    </div>     
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.numero_telefonico.label}}</div>
+                                        <div class="col-md-6">{{form.numero_telefonico}}</div>    
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.correo_electronico.label}}</div>
+                                        <div class="col-md-6">{{form.correo_electronico}}</div>    
+                                    </div>                         
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.eps.label}}</div>
+                                        <div class="col-md-6">{{form.eps}}</div>    
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.profesion.label}}</div>
+                                        <div class="col-md-6">{{form.profesion}}</div>    
+                                    </div>                         
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.contacto_emergencia.label}}</div>
+                                        <div class="col-md-6">{{form.contacto_emergencia}}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.numero_telefonico2.label}}</div>
+                                        <div class="col-md-6">{{form.numero_telefonico2}}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-6">{{form.estado.label}}</div>
+                                        <div class="col-md-6">{{form.estado}}</div>    
+                                    </div>            
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="row">
+                                    <div class="w-33">
+                                    <div class="center">
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+                                    
+                                            <button type="button" class="btn btn-success" data-dismiss="modal">
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="modal-footer"><button class="btn btn-primary" type="button" data-dismiss="modal">Cancelar</button></div> -->
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends  'base/base.html' %}
+
+{% block  page_content %}
+
+<!-- Dropdown Card Example -->
+<div class="card card-header-actions">
+    <div class="card-header">
+        Crud de creación Genero
+        <div class="dropdown no-caret">
+            <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i data-feather="more-vertical"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right animated--fade-in-up" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'emp:genero_new' %}"><i class="far fa-calendar-plus"></i>Nuevo</a>
+                <a class="dropdown-item" href="#!">Cancelar</a>
+                <a class="dropdown-item" href="#!">Guardar</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Card Body -->
+    <div class="card-body">
+      {% if not obj %}
+        <div class="alert alert-info">No existe genero</div>    
+    
+      {% else %}
+        <table class="table table-sm table-bordered">
+            <thead>
+                <th style="text-align: center">Id</th>
+                <th style="text-align: center">Descripcion</th>
+                <th style="text-align: center">Estado</th>
+                <!-- <th>Fecha creado</th> -->
+                <th style="text-align: center" >Fecha modificado</th>
+                <th style="text-align: center" class="all">Acciones</th>
+            </thead>
+            <tbody>
+                {% for item in obj %}
+
+                <tr>
+                    <td>{{ item.id  }}</td>
+                    <td>{{ item.descripcion  }}</td>
+                    <td>{{ item.estado|yesno:"Activo,Inactivo"  }}</td>
+                    <!-- <td>{{ item.fc|date:"d/m/Y H:i:s" }}</td> -->
+                    <td>{{ item.fm|date:"d/m/Y H:i:s" }}</td>
+                    <td style="text-align: center" >
+                         <a href="{% url 'emp:genero_edit' item.id %}" class="btn btn-warning btn-circle" role="button"> <i class="far fa-edit"></i></a>
+                         <!-- <button type="button" class="btn btn-xm btn-danger" data-toggle="popover" title="Información importante!!" data-content="Tener cuidado al borrar registro, recuerde solo inactivar">Info</button> -->
+                         <a href="#" class="btn btn-success btn-circle" role="button"> <i class="far fa-eye"></i></a>  
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+        {% endif %}  
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js_page %}
+<script>
+  // Call the dataTables jQuery plugin
+  $(document).ready(function() {
+    $('.table').DataTable();
+  });
+</script>
+{% endblock %}
+
+
+
